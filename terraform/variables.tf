@@ -19,7 +19,7 @@ variable "vpc_cidr" {
 variable "node_instance_type" {
   description = "EC2 instance type for EKS worker nodes"
   type        = string
-  default     = "t3.medium"
+  default     = "t3.micro"
 }
 
 variable "node_desired_size" {
