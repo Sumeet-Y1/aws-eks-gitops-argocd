@@ -2,8 +2,7 @@
 
 A GitOps-driven deployment pipeline for a Spring Boot API on AWS EKS, using ArgoCD to continuously reconcile cluster state with a Git repository instead of relying on manual `kubectl apply` or push-based CI/CD deploys.
 
-**Live demo:** `http://a5bf4d9bd52b640119117859c1d494c1-1894595658.ap-south-1.elb.amazonaws.com/hello`
-> Note: this points at infrastructure that is spun up on demand — if the link isn't responding, the cluster has likely been torn down to avoid ongoing AWS costs. See [Running it yourself](#running-it-yourself) below.
+> This project runs on infrastructure that is spun up on demand and torn down after use to avoid ongoing AWS costs — see [Running it yourself](#running-it-yourself) to deploy it live.
 
 ## Architecture
 
@@ -56,9 +55,11 @@ AWS EKS Cluster
 │   ├── vpc.tf
 │   ├── eks.tf
 │   └── outputs.tf
-└── manifests/                # Kubernetes manifests — the source of truth ArgoCD syncs from
-    ├── deployment.yaml
-    └── service.yaml
+├── manifests/                # Kubernetes manifests — the source of truth ArgoCD syncs from
+│   ├── deployment.yaml
+│   └── service.yaml
+└── screenshots/               # Proof-of-work screenshots
+    └── self-heal-demo.png
 ```
 
 ## Infrastructure design notes
@@ -90,6 +91,8 @@ gitops-demo-api-5cd44b5f99-zkx4l   0/1     Terminating   0          4s
 ```
 
 The manual scale-to-3 was reverted within ~5 seconds — the original pod (age 38m) was untouched while the two drift-induced pods were terminated, bringing the deployment back in line with Git's `replicas: 1`.
+
+![ArgoCD self-heal demo](screenshots/self-heal-demo.png)
 
 ## Running it yourself
 
