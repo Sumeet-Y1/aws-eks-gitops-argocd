@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gitops-demo-api
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: gitops-demo-api
   ports:
